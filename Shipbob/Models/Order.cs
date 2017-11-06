@@ -13,7 +13,8 @@ namespace Shipbob.Models
 
         public DateTime OrderDate { get; set; }
 
-        public string UserName { get; set; }
+        [ScaffoldColumn(false)]
+        public string UserId { get; set; }
 
         [Required(ErrorMessage = "First Name is Required")]
         [DisplayName("First Name")]

@@ -393,7 +393,7 @@ namespace Shipbob.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Orders");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

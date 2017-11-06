@@ -2,104 +2,120 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
+using System.Web;
+using System.Web.Mvc;
 using Shipbob.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Shipbob.Controllers
 {
-    public class OrdersController : ApiController
+    [Authorize]
+    public class OrdersController : Controller
     {
         private ShipbopContext db = new ShipbopContext();
 
-        // GET: api/Orders
-        public IQueryable<Order> GetOrders()
+        // GET: Orders
+        public ActionResult Index()
         {
-            return db.Orders;
+            return View(db.Orders.ToList());
         }
 
-        // GET: api/Orders/5
-        [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> GetOrder(int id)
+        // GET: Orders/Details/5
+        public ActionResult Details(int? id)
         {
-            Order order = await db.Orders.FindAsync(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order order = db.Orders.Find(id);
             if (order == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
-
-            return Ok(order);
+            return View(order);
         }
 
-        // PUT: api/Orders/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutOrder(int id, Order order)
+        // GET: Orders/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != order.OrderId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(order).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return View();
         }
 
-        // POST: api/Orders
-        [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> PostOrder(Order order)
+        // POST: Orders/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "OrderId,OrderDate,FirstName,LastName,AddressLine1,AddressLine2,City,State,PostalCode")] Order order)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                order.UserName = User.Identity.GetUserName();
+                db.Orders.Add(order);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
-            db.Orders.Add(order);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = order.OrderId }, order);
+            return View(order);
         }
 
-        // DELETE: api/Orders/5
-        [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> DeleteOrder(int id)
+        // GET: Orders/Edit/5
+        public ActionResult Edit(int? id)
         {
-            Order order = await db.Orders.FindAsync(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order order = db.Orders.Find(id);
             if (order == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
+            return View(order);
+        }
 
+        // POST: Orders/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "OrderId,OrderDate,FirstName,LastName,AddressLine1,AddressLine2,City,State,PostalCode")] Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(order);
+        }
+
+        // GET: Orders/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order order = db.Orders.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            return View(order);
+        }
+
+        // POST: Orders/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Order order = db.Orders.Find(id);
             db.Orders.Remove(order);
-            await db.SaveChangesAsync();
-
-            return Ok(order);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -109,11 +125,6 @@ namespace Shipbob.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool OrderExists(int id)
-        {
-            return db.Orders.Count(e => e.OrderId == id) > 0;
         }
     }
 }
