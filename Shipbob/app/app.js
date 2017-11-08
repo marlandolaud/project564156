@@ -42,12 +42,11 @@
 
     app.controller('ordersCtrl', function ($scope, $http, $location) {
 
-        var searchObject = $location.search();
-        if (searchObject) {
-            $scope.userId = searchObject.userId;
-        }
+        $scope.userId = getParameterByName('userid', $location.$$absUrl);
 
-        get();
+        if ($scope.userId) {
+            get();
+        }        
 
         $scope.newOrder = {};
 
@@ -70,24 +69,65 @@
                 })
                 .catch(function (response) {
                     debugger;
-                    console.log('error...');
+                    console.log(response);
                 });
             }
         };
 
-        $scope.deleteOrder = function myfunction() {
+        $scope.updateOrder = function (Order) {
+            if (Order.firstName && Order.lastName && Order.trackingId) {
+
+                var config = {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+
+                Order.userId = $scope.userId;
+
+                $http.put("/api/Orders1/" + Order.userId, Order, config)
+                .then(function (response) {                    
+                    $scope.isEditForm = false;
+                    get();
+                })
+                .catch(function (response) {
+                    debugger;
+                    console.log(response);
+                });
+            }
 
         }
 
-        $scope.updateOrder = function () {
+        $scope.deleteOrder = function myfunction(userId) {
+            if (userId) {
 
-        }
+                $http.delete("/api/Orders1/" + userId)
+                .then(function (response) {
+                    get();
+                })
+                .catch(function (response) {
+                    debugger;
+                    console.log(response);
+                });
+            }
+
+        }        
 
         function get() {
             $http.get("/api/Users1/" + $scope.userId)
             .then(function (response) {
                 $scope.users = response.data;
             });
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
     });
 

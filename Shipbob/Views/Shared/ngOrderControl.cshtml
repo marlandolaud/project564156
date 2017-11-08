@@ -5,7 +5,6 @@
         <button ng-click="isAddForm=true;" class="btn btn-default btn-xs">Add Order</button>
     </div>
     <div ng-show="isAddForm">
-        <input type="hidden" name="userid" value="1" ng-model="newOrder.userid" />
         <p>Tracking ID: <input type="text" name="trackingId" ng-model="newOrder.trackingId" required /></p>
         <p>First Name: <input type="text" name="firstName" ng-model="newOrder.firstName" required /></p>
         <p>First Name: <input type="text" name="lastName" ng-model="newOrder.lastName" required /></p>
@@ -30,8 +29,8 @@
             <span>City {{x.city}}</span>
             <span>State {{x.state}}</span>
             <span>Postal Code {{x.postalCode}}</span>
-            <button ng-click="editOrder()" class="btn btn-warning btn-xs">Edit Order</button>
-            <button ng-click="removeOrder()" class="btn btn-danger btn-xs">Delete Order</button>
+            <button ng-click="editOrder(x)" class="btn btn-warning btn-xs">Edit Order</button>
+            <button ng-click="removeOrder(x.orderId)" class="btn btn-danger btn-xs">Delete Order</button>
         </div>
         <div ng-show="isEditForm">
             <p>Tracking ID: <input type="text" name="trackingId" ng-model="x.trackingId" required /></p>
