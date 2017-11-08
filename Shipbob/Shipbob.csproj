@@ -205,11 +205,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\api\UsersOrdersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\Orders1Controller.cs" />
+    <Compile Include="Controllers\api\Orders1Controller.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
-    <Compile Include="Controllers\Users1Controller.cs" />
+    <Compile Include="Controllers\api\Users1Controller.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -225,6 +226,7 @@
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\app.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1084,10 +1086,11 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
-    <Content Include="Views\Shared\AngularControl.cshtml" />
+    <Content Include="Views\Shared\ngUserControl.cshtml" />
+    <Content Include="Views\Orders\UserOrder.cshtml" />
+    <Content Include="Views\Shared\ngOrderControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

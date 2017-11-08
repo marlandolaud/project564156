@@ -10,46 +10,46 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Shipbob.Models;
 
-namespace Shipbob.Controllers
+namespace Shipbob.Controllers.api
 {
-    public class Orders1Controller : ApiController
+    public class UsersOrdersController : ApiController
     {
         private ShipbopContext db = new ShipbopContext();
 
-        // GET: api/Orders1
-        public IQueryable<Order> GetOrders()
+        // GET: api/UsersOrders
+        public IQueryable<User> GetUsers()
         {
-            return db.Orders;
+            return db.Users;
         }
 
-        // GET: api/Orders1/5
-        [ResponseType(typeof(Order))]
-        public IHttpActionResult GetOrder(int id)
+        // GET: api/UsersOrders/5
+        [ResponseType(typeof(User))]
+        public IHttpActionResult GetUser(int id)
         {
-            Order order = db.Orders.Find(id);
-            if (order == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(order);
+            return Ok(user);
         }
 
-        // PUT: api/Orders1/5
+        // PUT: api/UsersOrders/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutOrder(int id, Order order)
+        public IHttpActionResult PutUser(int id, User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != order.OrderId)
+            if (id != user.UserId)
             {
                 return BadRequest();
             }
 
-            db.Entry(order).State = EntityState.Modified;
+            db.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace Shipbob.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
+                if (!UserExists(id))
                 {
                     return NotFound();
                 }
@@ -70,35 +70,35 @@ namespace Shipbob.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Orders1
-        [ResponseType(typeof(Order))]
-        public IHttpActionResult PostOrder(Order order)
+        // POST: api/UsersOrders
+        [ResponseType(typeof(User))]
+        public IHttpActionResult PostUser(User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Orders.Add(order);
+            db.Users.Add(user);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = order.OrderId }, order);
+            return CreatedAtRoute("DefaultApi", new { id = user.UserId }, user);
         }
 
-        // DELETE: api/Orders1/5
-        [ResponseType(typeof(Order))]
-        public IHttpActionResult DeleteOrder(int id)
+        // DELETE: api/UsersOrders/5
+        [ResponseType(typeof(User))]
+        public IHttpActionResult DeleteUser(int id)
         {
-            Order order = db.Orders.Find(id);
-            if (order == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            db.Orders.Remove(order);
+            db.Users.Remove(user);
             db.SaveChanges();
 
-            return Ok(order);
+            return Ok(user);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +110,9 @@ namespace Shipbob.Controllers
             base.Dispose(disposing);
         }
 
-        private bool OrderExists(int id)
+        private bool UserExists(int id)
         {
-            return db.Orders.Count(e => e.OrderId == id) > 0;
+            return db.Users.Count(e => e.UserId == id) > 0;
         }
     }
 }

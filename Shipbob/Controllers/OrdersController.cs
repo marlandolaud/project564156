@@ -10,7 +10,7 @@ using Shipbob.Models;
 
 namespace Shipbob.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class OrdersController : Controller
     {
         private ShipbopContext db = new ShipbopContext();
@@ -114,6 +114,17 @@ namespace Shipbob.Controllers
             db.Orders.Remove(order);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult UserOrder(int? userId)
+        {
+            User user = db.Users.Find(userId);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Name = $"{user.LastName}, {user.FirstName}";
+            return View();
         }
 
         protected override void Dispose(bool disposing)

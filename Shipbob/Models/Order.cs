@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace Shipbob.Models
 {
@@ -11,8 +12,11 @@ namespace Shipbob.Models
     {
         public int OrderId { get; set; }
 
-        public string UserId { get; set; }
+        public string TrackingId { get; set; }
 
+        public int UserId { get; set; }
+
+        [JsonIgnore]
         public virtual User User { get; set; }
 
         public DateTime OrderDate { get; set; }      
