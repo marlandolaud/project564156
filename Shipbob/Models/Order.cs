@@ -11,10 +11,11 @@ namespace Shipbob.Models
     {
         public int OrderId { get; set; }
 
-        public DateTime OrderDate { get; set; }
-
-        [ScaffoldColumn(false)]
         public string UserId { get; set; }
+
+        public virtual User User { get; set; }
+
+        public DateTime OrderDate { get; set; }      
 
         [Required(ErrorMessage = "First Name is Required")]
         [DisplayName("First Name")]

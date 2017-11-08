@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - Store</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angular")
+
 
 </head>
 <body>
@@ -30,6 +32,8 @@
         </div>
     </div>
     <div class="container body-content">
+
+        @Html.Partial("~/Views/Shared/AngularControl.cshtml")
 
         @RenderBody()
 

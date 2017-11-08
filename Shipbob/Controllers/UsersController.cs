@@ -11,107 +11,107 @@ using Shipbob.Models;
 namespace Shipbob.Controllers
 {
     [Authorize]
-    public class OrdersController : Controller
+    public class UsersController : Controller
     {
         private ShipbopContext db = new ShipbopContext();
 
-        // GET: Orders
+        // GET: Users
         public ActionResult Index()
         {
-            return View(db.Orders.ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Orders/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
-            if (order == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(order);
+            return View(user);
         }
 
-        // GET: Orders/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Orders/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrderId,UserId,OrderDate,FirstName,LastName,AddressLine1,AddressLine2,City,State,PostalCode")] Order order)
+        public ActionResult Create([Bind(Include = "UserId,FirstName,LastName")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Orders.Add(order);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(order);
+            return View(user);
         }
 
-        // GET: Orders/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
-            if (order == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(order);
+            return View(user);
         }
 
-        // POST: Orders/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrderId,UserId,OrderDate,FirstName,LastName,AddressLine1,AddressLine2,City,State,PostalCode")] Order order)
+        public ActionResult Edit([Bind(Include = "UserId,FirstName,LastName")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(order).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(order);
+            return View(user);
         }
 
-        // GET: Orders/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
-            if (order == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(order);
+            return View(user);
         }
 
-        // POST: Orders/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Order order = db.Orders.Find(id);
-            db.Orders.Remove(order);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

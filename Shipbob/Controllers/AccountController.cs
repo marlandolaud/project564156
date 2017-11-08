@@ -70,7 +70,7 @@ namespace Shipbob.Controllers
                 return View(model);
             }
 
-            var result = await SignInManager.PasswordSignInAsync(GetUserNamerFromFirstAndLast(model.FirstName, model.LastName), model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -133,12 +133,10 @@ namespace Shipbob.Controllers
         {
             if (ModelState.IsValid)
             {
-                string genoratedUserName = GetUserNamerFromFirstAndLast(model.FirstName, model.LastName);
-
                 var user = new ApplicationUser
                 {
-                    UserName = genoratedUserName,
-                    Email = "test@test.com",
+                    UserName = model.UserName,
+                    Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName
                 };
@@ -393,7 +391,7 @@ namespace Shipbob.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Orders");
+            return RedirectToAction("Index", "Manage");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
