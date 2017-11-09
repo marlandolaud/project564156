@@ -151,11 +151,6 @@ namespace Shipbob.Controllers
             return View(model);
         }
 
-        private string GetUserNamerFromFirstAndLast(string firstName, string lastName)
-        {
-            return firstName.SubstringSafe(0, 1) + lastName.SubstringSafe(0, 4);
-        }
-
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
