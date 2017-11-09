@@ -205,13 +205,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\api\UsersOrdersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\api\Orders1Controller.cs" />
+    <Compile Include="Controllers\api\OrdersController.cs" />
+    <Compile Include="Controllers\api\UsersController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
-    <Compile Include="Controllers\api\Users1Controller.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1052,8 +1050,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -1076,19 +1072,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Orders\Create.cshtml" />
-    <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
-    <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Orders\Index.cshtml" />
-    <Content Include="Views\Shared\ngUserControl.cshtml" />
     <Content Include="Views\Orders\UserOrder.cshtml" />
-    <Content Include="Views\Shared\ngOrderControl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

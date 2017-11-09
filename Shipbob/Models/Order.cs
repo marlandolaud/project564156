@@ -19,8 +19,6 @@ namespace Shipbob.Models
         [JsonIgnore]
         public virtual User User { get; set; }
 
-        public DateTime OrderDate { get; set; }      
-
         [Required(ErrorMessage = "First Name is Required")]
         [DisplayName("First Name")]
         [StringLength(160)]

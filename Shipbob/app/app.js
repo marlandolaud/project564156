@@ -85,7 +85,7 @@
 
                 Order.userId = $scope.userId;
 
-                $http.put("/api/Orders1/" + Order.userId, Order, config)
+                $http.put("/api/Orders1/" + Order.orderId, Order, config)
                 .then(function (response) {                    
                     $scope.isEditForm = false;
                     get();

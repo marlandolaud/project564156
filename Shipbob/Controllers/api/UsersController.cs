@@ -10,21 +10,25 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Shipbob.Models;
 
-namespace Shipbob.Controllers.api
+namespace Shipbob.Controllers
 {
-    public class UsersOrdersController : ApiController
+    public class Users1Controller : ApiController
     {
         private ShipbopContext db = new ShipbopContext();
 
-        // GET: api/UsersOrders
-        public IQueryable<User> GetUsers()
+        // GET: api/Users1
+        public IEnumerable<User> Get()
         {
-            return db.Users;
+            var users = db.Users
+                .OrderBy(x=>x.FirstName)
+                .ToList();
+
+            return users;
         }
 
-        // GET: api/UsersOrders/5
+        // GET: api/Users1/5
         [ResponseType(typeof(User))]
-        public IHttpActionResult GetUser(int id)
+        public IHttpActionResult Get(int id)
         {
             User user = db.Users.Find(id);
             if (user == null)
@@ -35,9 +39,9 @@ namespace Shipbob.Controllers.api
             return Ok(user);
         }
 
-        // PUT: api/UsersOrders/5
+        // PUT: api/Users1/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUser(int id, User user)
+        public IHttpActionResult Put(int id, User user)
         {
             if (!ModelState.IsValid)
             {
@@ -70,9 +74,9 @@ namespace Shipbob.Controllers.api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/UsersOrders
+        // POST: api/Users1
         [ResponseType(typeof(User))]
-        public IHttpActionResult PostUser(User user)
+        public IHttpActionResult Post(User user)
         {
             if (!ModelState.IsValid)
             {
@@ -85,9 +89,9 @@ namespace Shipbob.Controllers.api
             return CreatedAtRoute("DefaultApi", new { id = user.UserId }, user);
         }
 
-        // DELETE: api/UsersOrders/5
+        // DELETE: api/Users1/5
         [ResponseType(typeof(User))]
-        public IHttpActionResult DeleteUser(int id)
+        public IHttpActionResult Delete(int id)
         {
             User user = db.Users.Find(id);
             if (user == null)
